@@ -15,11 +15,17 @@ int main(int, char**)
     for(;;)
     {
         Mat frame;
-        cap >> frame; // get a new frame from camera
-        cvtColor(frame, edges, COLOR_BGR2GRAY);
-        GaussianBlur(edges, edges, Size(7,7), 1.5, 1.5);
+	cap >> frame; // get a new frame from camera
+//        bilateralFilter(edges, edges, 3, 18,18);
+	cvtColor(frame, edges, COLOR_BGR2GRAY);
+//	Mat acc = Mat::zeros(frame.size(),CV_64FC1);
+	GaussianBlur(edges, edges, Size(17,17), 1.5, 1.5);
+  //      bilateralFilter(edges, edges, 3, 18,18); 
         Canny(edges, edges, 0, 30, 3);
-        imshow("edges", edges);
+//      accumulateWeighted(edges, acc,0.95);
+//	accumulateWeighted(acc, acc,0.5);
+//      imshow("edges", acc);
+	imshow("edges", edges);
         if(waitKey(30) >= 0) break;
     }
     // the camera will be deinitialized automatically in VideoCapture destructor
